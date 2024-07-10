@@ -4,9 +4,15 @@ from models import NearEarthObject
 
 with open("data/neos.csv", "r") as infile:
     reader = csv.reader(infile)
-    print(next(reader))
-    first_row = next(reader)
-    print(first_row)
+    for enum, row in enumerate(reader):
+        if enum == 0:
+            print(enum, row)
+        if enum == 1:
+            print(enum, row)
+            first_row = row
+        if enum == 282:
+            no_name_row = row
+    print(no_name_row)
     neo = NearEarthObject(
         designation=first_row[3],
         name=first_row[4],

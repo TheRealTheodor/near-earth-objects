@@ -47,8 +47,8 @@ class NearEarthObject:
         # handle any edge cases, such as a empty name being represented by `None`
         # and a missing diameter being represented by `float('nan')`.
         self.designation = designation
-        self.name = name
-        self.diameter = float(diameter)
+        self.name = name if name != "" else None
+        self.diameter = float(diameter) if diameter != "" else None
         self.hazardous = False if hazardous == "N" else True
 
         # Create an empty initial collection of linked approaches.
@@ -65,9 +65,9 @@ class NearEarthObject:
 
     def __str__(self):
         """Return `str(self)`."""
-        return "NEO {fullname} has a diameter of {diameter:.3f} km and {hazardous} potentially hazardous.".format(
+        return "NEO {fullname} has a diameter of {diameter} km and {hazardous} potentially hazardous.".format(
             fullname=self.fullname,
-            diameter=self.diameter,
+            diameter=round(self.diameter, 4) if self.diameter else "?",
             hazardous="is" if self.hazardous is True else "is not",
         )
 
