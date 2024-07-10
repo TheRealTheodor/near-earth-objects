@@ -6,14 +6,13 @@ To run these tests from the project root, run:
 
 These tests should pass on the starter code.
 """
+
 import collections
 import csv
 import json
 import os
 import pathlib
-
 import unittest
-
 
 # The root of the project, containing `main.py`.
 PROJECT_ROOT = pathlib.Path(__file__).parent.parent.resolve()
@@ -21,9 +20,9 @@ PROJECT_ROOT = pathlib.Path(__file__).parent.parent.resolve()
 
 class TestDataFiles(unittest.TestCase):
     def setUp(self):
-        self.data_root = PROJECT_ROOT / 'data'
-        self.neo_file = self.data_root / 'neos.csv'
-        self.cad_file = self.data_root / 'cad.json'
+        self.data_root = PROJECT_ROOT / "data"
+        self.neo_file = self.data_root / "neos.csv"
+        self.cad_file = self.data_root / "cad.json"
 
     def test_data_files_exist(self):
         self.assertTrue(self.neo_file.exists())
@@ -47,7 +46,9 @@ class TestDataFiles(unittest.TestCase):
                 # Consume the entire sequence into length-0 deque.
                 collections.deque(csv.reader(f), maxlen=0)
         except csv.Error as err:
-            raise self.failureException(f"{self.neo_file!r} is not a well-formated CSV.") from err
+            raise self.failureException(
+                f"{self.neo_file!r} is not a well-formated CSV."
+            ) from err
 
         # Check that the CAD data is JSON-formatted.
         try:
@@ -55,8 +56,10 @@ class TestDataFiles(unittest.TestCase):
                 json.load(f)
             json.loads(self.cad_file.read_text())
         except json.JSONDecodeError as err:
-            raise self.failureException(f"{self.cad_file!r} is not a valid JSON document.") from err
+            raise self.failureException(
+                f"{self.cad_file!r} is not a valid JSON document."
+            ) from err
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

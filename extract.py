@@ -12,10 +12,11 @@ line, and uses the resulting collections to build an `NEODatabase`.
 
 You'll edit this file in Task 2.
 """
+
 import csv
 import json
 
-from models import NearEarthObject, CloseApproach
+from models import CloseApproach, NearEarthObject
 
 
 def load_neos(neo_csv_path):
