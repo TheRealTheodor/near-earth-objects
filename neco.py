@@ -1,6 +1,7 @@
 import csv
+import json
 
-from models import NearEarthObject
+from models import NearEarthObject, CloseApproach
 
 with open("data/neos.csv", "r") as infile:
     reader = csv.reader(infile)
@@ -20,3 +21,16 @@ with open("data/neos.csv", "r") as infile:
         hazardous=first_row[7],
     )
     print(neo)
+
+
+with open("data/cad.json", "r") as infile:
+    contents = json.load(infile)
+print(contents["fields"])
+print(contents["data"][1])
+ca = CloseApproach(
+    designation=contents["data"][1][1],
+    time=contents["data"][1][3],
+    distance=contents["data"][1][4],
+    velocity=contents["data"][1][7],
+)
+print(ca)
