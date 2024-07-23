@@ -54,7 +54,7 @@ def load_approaches(cad_json_path="data/cad.json"):
     for data in contents["data"]:
         list_of_ca.append(
             CloseApproach(
-                designation=data[1],
+                designation=data[0],
                 time=data[3],
                 distance=data[4],
                 velocity=data[7],

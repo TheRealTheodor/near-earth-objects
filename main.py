@@ -43,6 +43,7 @@ import pathlib
 import shlex
 import sys
 import time
+import pickle
 
 from database import NEODatabase
 from extract import load_approaches, load_neos
@@ -479,7 +480,9 @@ def main():
     args = parser.parse_args()
 
     # Extract data from the data files into structured Python objects.
-    database = NEODatabase(load_neos(args.neofile), load_approaches(args.cadfile))
+    # database = NEODatabase(load_neos(args.neofile), load_approaches(args.cadfile))
+    with open("database.pickle", "rb") as infile:
+        database = pickle.load(infile)
 
     # Run the chosen subcommand.
     if args.cmd == "inspect":

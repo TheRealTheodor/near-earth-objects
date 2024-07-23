@@ -45,8 +45,8 @@ class NearEarthObject:
         # and a missing diameter being represented by `float('nan')`.
         self.designation = designation
         self.name = name if name != "" else None
-        self.diameter = float(diameter) if diameter != "" else None
-        self.hazardous = False if hazardous == "N" else True
+        self.diameter = float(diameter) if diameter != "" else float("nan")
+        self.hazardous = True if hazardous == "Y" else False
 
         # Create an empty initial collection of linked approaches.
         self.approaches = []
@@ -70,11 +70,14 @@ class NearEarthObject:
 
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""
-        return "NearEarthObject(designation={designation}, name={name}, diameter={diameter}, hazardous={hazardous})".format(
+        return "NearEarthObject(designation={designation}, name={name}, diameter={diameter}, hazardous={hazardous}, approaches={approaches})".format(
             designation=self.designation,
             name=self.fullname,
-            diameter=round(self.diameter, 4) if self.diameter is not None else "?",
+            diameter=(
+                round(self.diameter, 4) if self.diameter is not float("nan") else "?"
+            ),
             hazardous="is" if self.hazardous is True else "is not",
+            approaches=self.approaches,
         )
 
 
