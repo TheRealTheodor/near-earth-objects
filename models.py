@@ -64,15 +64,17 @@ class NearEarthObject:
         """Return `str(self)`."""
         return "NEO {fullname} has a diameter of {diameter} km and {hazardous} potentially hazardous.".format(
             fullname=self.fullname,
-            diameter=round(self.diameter, 4) if self.diameter else "?",
+            diameter=round(self.diameter, 4) if self.diameter is not None else "?",
             hazardous="is" if self.hazardous is True else "is not",
         )
 
     def __repr__(self):
         """Return `repr(self)`, a computer-readable string representation of this object."""
-        return (
-            f"NearEarthObject(designation={self.designation!r}, name={self.name!r}, "
-            f"diameter={self.diameter:.3f}, hazardous={self.hazardous!r})"
+        return "NearEarthObject(designation={designation}, name={name}, diameter={diameter}, hazardous={hazardous})".format(
+            designation=self.designation,
+            name=self.fullname,
+            diameter=round(self.diameter, 4) if self.diameter is not None else "?",
+            hazardous="is" if self.hazardous is True else "is not",
         )
 
 
