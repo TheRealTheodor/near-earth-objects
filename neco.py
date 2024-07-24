@@ -8,7 +8,5 @@ import pickle
 
 database = NEODatabase(neos=load_neos(), approaches=load_approaches())
 
-database.get_neo_by_designation(designation="1001")
-
 with open("database.pickle", "wb") as outfile:
     pickle.dump(database, outfile)
