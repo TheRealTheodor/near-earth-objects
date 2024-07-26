@@ -14,7 +14,7 @@ provide that level of resolution, so the output format also will not.
 import datetime
 
 
-def cd_to_datetime(calendar_date):
+def cd_to_datetime(calendar_date: str) -> datetime.datetime:
     """Convert a NASA-formatted calendar date/time description into a datetime.
 
     NASA's format, at least in the `cd` field of close approach data, uses the
@@ -30,7 +30,7 @@ def cd_to_datetime(calendar_date):
     return datetime.datetime.strptime(calendar_date, "%Y-%b-%d %H:%M")
 
 
-def datetime_to_str(dt):
+def datetime_to_str(dt: datetime.datetime) -> str:
     """Convert a naive Python datetime into a human-readable string.
 
     The default string representation of a datetime includes seconds; however,

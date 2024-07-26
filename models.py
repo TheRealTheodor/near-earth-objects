@@ -18,6 +18,8 @@ quirks of the data set, such as missing names and unknown diameters.
 You'll edit this file in Task 1.
 """
 
+from typing import List
+
 from helpers import cd_to_datetime, datetime_to_str
 
 
@@ -36,7 +38,9 @@ class NearEarthObject:
 
     # TODO: How can you, and should you, change the arguments to this constructor?
     # If you make changes, be sure to update the comments in this file.
-    def __init__(self, designation, name, diameter, hazardous):
+    def __init__(
+        self, designation: str, name: str, diameter: str, hazardous: str
+    ) -> None:
         """Create a new `NearEarthObject`."""
         # TODO: Assign information from the arguments passed to the constructor
         # onto attributes named `designation`, `name`, `diameter`, and `hazardous`.
@@ -49,10 +53,10 @@ class NearEarthObject:
         self.hazardous = True if hazardous == "Y" else False
 
         # Create an empty initial collection of linked approaches.
-        self.approaches = []
+        self.approaches: List[CloseApproach] = []
 
     @property
-    def fullname(self):
+    def fullname(self) -> str:
         """Return a representation of the full name of this NEO."""
         return (
             self.designation + f" ({self.name})"
@@ -60,7 +64,7 @@ class NearEarthObject:
             else self.designation
         )
 
-    def __str__(self):
+    def __str__(self) -> str:
         """Return `str(self)`."""
         return "NEO {fullname} has a diameter of {diameter} km and {hazardous} potentially hazardous.".format(
             fullname=self.fullname,
@@ -68,7 +72,7 @@ class NearEarthObject:
             hazardous="is" if self.hazardous is True else "is not",
         )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """Return `repr(self)`, a computer-readable string representation of this object."""
         return "NearEarthObject(designation={designation}, name={name}, diameter={diameter}, hazardous={hazardous}, approaches={approaches})".format(
             designation=self.designation,
@@ -97,7 +101,9 @@ class CloseApproach:
 
     # TODO: How can you, and should you, change the arguments to this constructor?
     # If you make changes, be sure to update the comments in this file.
-    def __init__(self, designation, time, distance, velocity):
+    def __init__(
+        self, designation: str, time: str, distance: str, velocity: str
+    ) -> None:
         """Create a new `CloseApproach`.
 
         :param info: A dictionary of excess keyword arguments supplied to the constructor.
@@ -114,10 +120,10 @@ class CloseApproach:
         self.velocity = float(velocity)
 
         # Create an attribute for the referenced NEO, originally None.
-        self.neo = None
+        self.neo: None | NearEarthObject = None
 
     @property
-    def time_str(self):
+    def time_str(self) -> str:
         """Return a formatted representation of this `CloseApproach`'s approach time.
 
         The value in `self.time` should be a Python `datetime` object. While a
@@ -132,7 +138,7 @@ class CloseApproach:
 
         return f"{self.time.year}-{self.time.month}-{self.time.day} {self.time.hour}:{self.time.minute}"
 
-    def __str__(self):
+    def __str__(self) -> str:
         """Return `str(self)`."""
         # TODO: Use this object's attributes to return a human-readable string representation.
         # The project instructions include one possibility. Peek at the __repr__
@@ -146,7 +152,7 @@ class CloseApproach:
             velocity=round(self.velocity, 2),
         )
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """Return `repr(self)`, a computer-readable string representation of this object."""
         return (
             f"CloseApproach(time={self.time_str!r}, distance={self.distance:.2f}, "

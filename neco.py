@@ -1,10 +1,10 @@
 import csv
 import json
-
-from models import NearEarthObject, CloseApproach
-from extract import load_approaches, load_neos
-from database import NEODatabase
 import pickle
+
+from database import NEODatabase
+from extract import load_approaches, load_neos
+from models import CloseApproach, NearEarthObject
 
 database = NEODatabase(neos=load_neos(), approaches=load_approaches())
 

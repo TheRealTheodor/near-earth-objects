@@ -15,11 +15,12 @@ You'll edit this file in Task 2.
 
 import csv
 import json
+from typing import List
 
 from models import CloseApproach, NearEarthObject
 
 
-def load_neos(neo_csv_path="data/neos.csv"):
+def load_neos(neo_csv_path: str = "data/neos.csv") -> List[NearEarthObject]:
     """Read near-Earth object information from a CSV file.
 
     :param neo_csv_path: A path to a CSV file containing data about near-Earth objects.
@@ -42,7 +43,7 @@ def load_neos(neo_csv_path="data/neos.csv"):
     return list_of_neos
 
 
-def load_approaches(cad_json_path="data/cad.json"):
+def load_approaches(cad_json_path: str = "data/cad.json") -> List[CloseApproach]:
     """Read close approach data from a JSON file.
 
     :param neo_csv_path: A path to a JSON file containing data about close approaches.

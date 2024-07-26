@@ -40,10 +40,10 @@ import argparse
 import cmd
 import datetime
 import pathlib
+import pickle
 import shlex
 import sys
 import time
-import pickle
 
 from database import NEODatabase
 from extract import load_approaches, load_neos

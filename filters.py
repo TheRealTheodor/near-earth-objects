@@ -19,6 +19,8 @@ You'll edit this file in Tasks 3a and 3c.
 
 import operator
 
+from models import CloseApproach, NearEarthObject
+
 
 class UnsupportedCriterionError(NotImplementedError):
     """A filter criterion is unsupported."""
@@ -115,8 +117,30 @@ def create_filters(
     :param hazardous: Whether the NEO of a matching `CloseApproach` is potentially hazardous.
     :return: A collection of filters for use with `query`.
     """
-    # TODO: Decide how you will represent your filters.
-    return ()
+    return {
+        "date": date,
+        "start_date": start_date,
+        "end_date": end_date,
+        "distance_min": distance_min,
+        "distance_max": distance_max,
+        "velocity_min": velocity_min,
+        "velocity_max": velocity_max,
+        "diameter_min": diameter_min,
+        "diameter_max": diameter_max,
+        "hazardous": hazardous,
+    }
+
+
+class DateFilter(AttributeFilter):
+    @classmethod
+    def get(cls, approach: CloseApproach):
+        return approach.time
+
+
+class DistanceFilter(AttributeFilter):
+    @classmethod
+    def get(cls, approach: CloseApproach):
+        return approach.distance
 
 
 def limit(iterator, n=None):
