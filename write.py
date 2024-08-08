@@ -13,9 +13,13 @@ You'll edit this file in Part 4.
 
 import csv
 import json
+import pathlib
+from typing import List
+
+from models import CloseApproach
 
 
-def write_to_csv(results, filename):
+def write_to_csv(results: List[CloseApproach], filename: pathlib.PosixPath) -> None:
     """Write an iterable of `CloseApproach` objects to a CSV file.
 
     The precise output specification is in `README.md`. Roughly, each output row
@@ -34,10 +38,23 @@ def write_to_csv(results, filename):
         "diameter_km",
         "potentially_hazardous",
     )
-    # TODO: Write the results to a CSV file, following the specification in the instructions.
+    with open(filename, "w") as outfile:
+        writer = csv.DictWriter(outfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for result in results:
+            row = {
+                "datetime_utc": result.time,
+                "distance_au": result.distance,
+                "velocity_km_s": result.velocity,
+                "designation": result._designation,
+                "name": result.neo.name if result.neo.name is not None else "",  # type: ignore
+                "diameter_km": result.neo.diameter,  # type: ignore
+                "potentially_hazardous": result.neo.hazardous,  # type: ignore
+            }
+            writer.writerow(row)
 
 
-def write_to_json(results, filename):
+def write_to_json(results: List[CloseApproach], filename: pathlib.PosixPath) -> None:
     """Write an iterable of `CloseApproach` objects to a JSON file.
 
     The precise output specification is in `README.md`. Roughly, the output is a
@@ -48,4 +65,10 @@ def write_to_json(results, filename):
     :param results: An iterable of `CloseApproach` objects.
     :param filename: A Path-like object pointing to where the data should be saved.
     """
-    # TODO: Write the results to a JSON file, following the specification in the instructions.
+    with open(filename, "w") as outfile:
+        final_json_list = []
+        for result in results:
+            result_dict = result.serialize()
+            result_dict["neo"] = result.neo.serialize()  # type: ignore
+            final_json_list.append(result_dict)
+        json.dump(final_json_list, outfile)

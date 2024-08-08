@@ -12,10 +12,10 @@ data on NEOs and close approaches extracted by `extract.load_neos` and
 You'll edit this file in Tasks 2 and 3.
 """
 
-from typing import Any, Dict, List, Generator
+from typing import Any, Dict, Generator, List
 
-from models import CloseApproach, NearEarthObject
 import filters as fls
+from models import CloseApproach, NearEarthObject
 
 
 class NEODatabase:

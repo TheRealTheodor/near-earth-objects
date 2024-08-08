@@ -17,11 +17,12 @@ iterator.
 You'll edit this file in Tasks 3a and 3c.
 """
 
-import operator
 import datetime
-from models import CloseApproach
-from typing import Generator
 import itertools
+import operator
+from typing import Any, Callable, Dict, Generator, List
+
+from models import CloseApproach
 
 
 class UnsupportedCriterionError(NotImplementedError):
@@ -46,9 +47,9 @@ class AttributeFilter:
 
     def __init__(
         self,
-        op,
-        value,
-    ):
+        op: Callable,
+        value: Any,
+    ) -> None:
         """Construct a new `AttributeFilter` from an binary predicate and a reference value.
 
         The reference value will be supplied as the second (right-hand side)
@@ -67,7 +68,7 @@ class AttributeFilter:
         return self.op(self.get(approach), self.value)
 
     @classmethod
-    def get(cls, approach):
+    def get(cls, approach: CloseApproach) -> Any:
         """Get an attribute of interest from a close approach.
 
         Concrete subclasses must override this method to get an attribute of
@@ -78,22 +79,54 @@ class AttributeFilter:
         """
         raise UnsupportedCriterionError
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"{self.__class__.__name__}(op=operator.{self.op.__name__}, value={self.value})"
 
 
+class DateFilter(AttributeFilter):
+    @classmethod
+    def get(cls, approach: CloseApproach) -> datetime.date:
+        return approach.time.date()
+
+
+class DistanceFilter(AttributeFilter):
+    @classmethod
+    def get(cls, approach: CloseApproach) -> float:
+        return approach.distance
+
+
+class VelocityFilter(AttributeFilter):
+    @classmethod
+    def get(cls, approach: CloseApproach) -> float:
+        return approach.velocity
+
+
+class DiameterFilter(AttributeFilter):
+    @classmethod
+    def get(cls, ca: CloseApproach) -> float:
+        return ca.neo.diameter  # type: ignore
+
+
+class HazardousFilter(AttributeFilter):
+    @classmethod
+    def get(cls, ca: CloseApproach) -> bool:
+        return ca.neo.hazardous  # type: ignore
+
+
 def create_filters(
-    date=None,
-    start_date=None,
-    end_date=None,
-    distance_min=None,
-    distance_max=None,
-    velocity_min=None,
-    velocity_max=None,
-    diameter_min=None,
-    diameter_max=None,
-    hazardous=None,
-):
+    date: datetime.date | None = None,
+    start_date: datetime.date | None = None,
+    end_date: datetime.date | None = None,
+    distance_min: float | None = None,
+    distance_max: float | None = None,
+    velocity_min: float | None = None,
+    velocity_max: float | None = None,
+    diameter_min: float | None = None,
+    diameter_max: float | None = None,
+    hazardous: bool | None = None,
+) -> Dict[
+    str, DateFilter | DistanceFilter | VelocityFilter | DiameterFilter | HazardousFilter
+]:
     """Create a collection of filters from user-specified criteria.
 
     Each of these arguments is provided by the main module with a value from the
@@ -137,37 +170,7 @@ def create_filters(
     }
 
 
-class DateFilter(AttributeFilter):
-    @classmethod
-    def get(cls, approach: CloseApproach) -> datetime.datetime:
-        return approach.time.date()
-
-
-class DistanceFilter(AttributeFilter):
-    @classmethod
-    def get(cls, approach: CloseApproach) -> float:
-        return approach.distance
-
-
-class VelocityFilter(AttributeFilter):
-    @classmethod
-    def get(cls, approach: CloseApproach) -> float:
-        return approach.velocity
-
-
-class DiameterFilter(AttributeFilter):
-    @classmethod
-    def get(cls, ca: CloseApproach) -> float:
-        return ca.neo.diameter
-
-
-class HazardousFilter(AttributeFilter):
-    @classmethod
-    def get(cls, ca: CloseApproach) -> bool:
-        return ca.neo.hazardous
-
-
-def limit(iterator: Generator, n=None):
+def limit(iterator: Generator, n: int | None = None) -> List[Any]:
     """Produce a limited stream of values from an iterator.
 
     If `n` is 0 or None, don't limit the iterator at all.

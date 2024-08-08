@@ -18,7 +18,7 @@ quirks of the data set, such as missing names and unknown diameters.
 You'll edit this file in Task 1.
 """
 
-from typing import List
+from typing import Any, Dict, List
 
 from helpers import cd_to_datetime, datetime_to_str
 
@@ -83,6 +83,14 @@ class NearEarthObject:
             hazardous="is" if self.hazardous is True else "is not",
             approaches=self.approaches,
         )
+
+    def serialize(self) -> Dict[str, Any]:
+        return {
+            "designation": self.designation,
+            "name": self.name,
+            "diameter_km": self.diameter,
+            "potentially_hazardous": self.hazardous,
+        }
 
 
 class CloseApproach:
@@ -158,3 +166,10 @@ class CloseApproach:
             f"CloseApproach(time={self.time_str!r}, distance={self.distance:.2f}, "
             f"velocity={self.velocity:.2f}, neo={self.neo!r})"
         )
+
+    def serialize(self) -> Dict[str, Any]:
+        return {
+            "datetime_utc": self.time_str,
+            "distance_au": self.distance,
+            "velocity_km_s": self.distance,
+        }
