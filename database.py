@@ -12,9 +12,10 @@ data on NEOs and close approaches extracted by `extract.load_neos` and
 You'll edit this file in Tasks 2 and 3.
 """
 
-from typing import Any, Dict, Generator, List
+from typing import Any, Dict, List, Generator
 
 from models import CloseApproach, NearEarthObject
+import filters as fls
 
 
 class NEODatabase:
@@ -95,7 +96,17 @@ class NEODatabase:
             return self._neos_by_name[name]
         return None
 
-    def query(self, filters: Dict[str, Any] = {}) -> Generator:
+    def query(
+        self,
+        filters: Dict[
+            str,
+            fls.HazardousFilter
+            | fls.DiameterFilter
+            | fls.VelocityFilter
+            | fls.DateFilter
+            | fls.DistanceFilter,
+        ] = {},
+    ) -> Generator:
         """Query close approaches to generate those that match a collection of filters.
 
         This generates a stream of `CloseApproach` objects that match all of the
@@ -109,6 +120,11 @@ class NEODatabase:
         :param filters: A collection of filters capturing user-specified criteria.
         :return: A stream of matching `CloseApproach` objects.
         """
-        # TODO: Generate `CloseApproach` objects that match all of the filters.
+
         for approach in self._approaches:
-            yield approach
+            boolean_dict = {}
+            for filtr_name, filtr in filters.items():
+                if filtr.value is not None:
+                    boolean_dict[filtr_name] = filtr(approach)
+            if all(boolean_dict.values()):
+                yield approach
