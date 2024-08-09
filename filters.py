@@ -84,32 +84,57 @@ class AttributeFilter:
 
 
 class DateFilter(AttributeFilter):
+    """Children class of AttributeFilter to adress comparison
+    of date CloseApproach attribute.
+    """
+
     @classmethod
     def get(cls, approach: CloseApproach) -> datetime.date:
+        """Get the instance attribute of CloseApproach."""
         return approach.time.date()
 
 
 class DistanceFilter(AttributeFilter):
+    """Children class of AttributeFilter to adress comparison
+    of distance CloseApproach attribute.
+    """
+
     @classmethod
     def get(cls, approach: CloseApproach) -> float:
+        """Get the instance attribute of CloseApproach."""
         return approach.distance
 
 
 class VelocityFilter(AttributeFilter):
+    """Children class of AttributeFilter to adress comparison
+    of velocity CloseApproach attribute.
+    """
+
     @classmethod
     def get(cls, approach: CloseApproach) -> float:
+        """Get the instance attribute of CloseApproach."""
         return approach.velocity
 
 
 class DiameterFilter(AttributeFilter):
+    """Children class of AttributeFilter to adress comparison
+    of diameter NearEarthObject attribute.
+    """
+
     @classmethod
     def get(cls, ca: CloseApproach) -> float:
+        """Get the instance attribute of NearEarthObject linked to CloseApproach."""
         return ca.neo.diameter  # type: ignore
 
 
 class HazardousFilter(AttributeFilter):
+    """Children class of AttributeFilter to adress comparison
+    of hazardous NearEarthObject attribute.
+    """
+
     @classmethod
     def get(cls, ca: CloseApproach) -> bool:
+        """Get the instance attribute of NearEarthObject linked to CloseApproach."""
         return ca.neo.hazardous  # type: ignore
 
 
@@ -181,4 +206,4 @@ def limit(iterator: Generator, n: int | None = None) -> List[Any]:
     """
     if n == 0:
         n = None
-    return list(itertools.islice(iterator, n))
+    return itertools.islice(iterator, n)

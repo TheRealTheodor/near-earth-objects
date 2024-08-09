@@ -85,6 +85,7 @@ class NearEarthObject:
         )
 
     def serialize(self) -> Dict[str, Any]:
+        """Return a dictionary ready for saving into json file."""
         return {
             "designation": self.designation,
             "name": self.name,
@@ -168,6 +169,7 @@ class CloseApproach:
         )
 
     def serialize(self) -> Dict[str, Any]:
+        """Return a dictionary ready for saving into json file."""
         return {
             "datetime_utc": self.time_str,
             "distance_au": self.distance,
