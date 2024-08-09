@@ -40,7 +40,6 @@ class NearEarthObject:
         self, designation: str, name: str, diameter: str, hazardous: str
     ) -> None:
         """Create a new `NearEarthObject`."""
-
         self.designation = designation
         self.name = name if name != "" else None
         self.diameter = float(diameter) if diameter != "" else float("nan")
@@ -109,7 +108,6 @@ class CloseApproach:
 
         :param info: A dictionary of excess keyword arguments supplied to the constructor.
         """
-
         self._designation = designation
         self.time = cd_to_datetime(time)
         self.distance = float(distance)
@@ -131,7 +129,6 @@ class CloseApproach:
         formatted string that can be used in human-readable representations and
         in serialization to CSV and JSON files.
         """
-
         return f"{self.time.year}-{self.time.month}-{self.time.day} {self.time.hour}:{self.time.minute}"
 
     def __str__(self) -> str:

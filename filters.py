@@ -80,13 +80,12 @@ class AttributeFilter:
         raise UnsupportedCriterionError
 
     def __repr__(self) -> str:
+        """Return `repr(self)`, a computer-readable string representation of this object."""
         return f"{self.__class__.__name__}(op=operator.{self.op.__name__}, value={self.value})"
 
 
 class DateFilter(AttributeFilter):
-    """Children class of AttributeFilter to adress comparison
-    of date CloseApproach attribute.
-    """
+    """Children class of AttributeFilter to adress comparison of date CloseApproach attribute."""
 
     @classmethod
     def get(cls, approach: CloseApproach) -> datetime.date:
@@ -95,9 +94,7 @@ class DateFilter(AttributeFilter):
 
 
 class DistanceFilter(AttributeFilter):
-    """Children class of AttributeFilter to adress comparison
-    of distance CloseApproach attribute.
-    """
+    """Children class of AttributeFilter to adress comparison of distance CloseApproach attribute."""
 
     @classmethod
     def get(cls, approach: CloseApproach) -> float:
@@ -106,9 +103,7 @@ class DistanceFilter(AttributeFilter):
 
 
 class VelocityFilter(AttributeFilter):
-    """Children class of AttributeFilter to adress comparison
-    of velocity CloseApproach attribute.
-    """
+    """Children class of AttributeFilter to adress comparison of velocity CloseApproach attribute."""
 
     @classmethod
     def get(cls, approach: CloseApproach) -> float:
@@ -117,9 +112,7 @@ class VelocityFilter(AttributeFilter):
 
 
 class DiameterFilter(AttributeFilter):
-    """Children class of AttributeFilter to adress comparison
-    of diameter NearEarthObject attribute.
-    """
+    """Children class of AttributeFilter to adress comparison of diameter NearEarthObject attribute."""
 
     @classmethod
     def get(cls, ca: CloseApproach) -> float:
@@ -128,9 +121,7 @@ class DiameterFilter(AttributeFilter):
 
 
 class HazardousFilter(AttributeFilter):
-    """Children class of AttributeFilter to adress comparison
-    of hazardous NearEarthObject attribute.
-    """
+    """Children class of AttributeFilter to adress comparison of hazardous NearEarthObject attribute."""
 
     @classmethod
     def get(cls, ca: CloseApproach) -> bool:

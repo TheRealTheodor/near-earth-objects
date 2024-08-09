@@ -119,7 +119,6 @@ class NEODatabase:
         :param filters: A collection of filters capturing user-specified criteria.
         :return: A stream of matching `CloseApproach` objects.
         """
-
         for approach in self._approaches:
             boolean_dict = {}
             for filtr_name, filtr in filters.items():
