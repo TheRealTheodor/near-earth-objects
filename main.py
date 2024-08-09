@@ -480,9 +480,7 @@ def main():
     args = parser.parse_args()
 
     # Extract data from the data files into structured Python objects.
-    # database = NEODatabase(load_neos(args.neofile), load_approaches(args.cadfile))
-    with open("database.pickle", "rb") as infile:
-        database = pickle.load(infile)
+    database = NEODatabase(load_neos(args.neofile), load_approaches(args.cadfile))
 
     # Run the chosen subcommand.
     if args.cmd == "inspect":
